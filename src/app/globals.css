@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   Scentify design tokens: editorial light.
+   Warm paper surfaces, near-black ink, one muted oxblood accent.
+   Token names are semantic roles (kept from the original theme):
+     ink / charcoal / graphite  → page, section and raised surfaces
+     ivory / parchment / mist / dim → text, strongest to faintest
+     champagne*                 → the single accent
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  --color-ink: #f4f0e8;
+  --color-charcoal: #ece6db;
+  --color-graphite: #fbf9f4;
+  --color-smoke: #dcd4c7;
+  --color-ash: #b9b0a2;
+  --color-ivory: #1b1916;
+  --color-parchment: #36322d;
+  --color-mist: #625b52;
+  --color-dim: #736b61;
+  --color-champagne: #7a2e2a;
+  --color-champagne-soft: #7a2e2a;
+  --color-champagne-deep: #5c211e;
+  --color-rose: #a4473f;
+  --color-sage: #4e6b47;
+  --color-danger: #a33a2e;
+
+  --font-display: var(--font-serif-display), "Instrument Serif", Georgia, serif;
+  --font-sans: var(--font-geist), "Geist", ui-sans-serif, system-ui, sans-serif;
+
+  /* Restrained corners: editorial, not bubbly. */
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.375rem;
+  --radius-2xl: 0.5rem;
+  --radius-3xl: 0.625rem;
+  --shadow-glow: 0 1px 2px rgb(27 25 22 / 0.06);
+  --shadow-card: none;
+
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+
+  @keyframes shimmer {
+    from { background-position: -200% 0; }
+    to { background-position: 200% 0; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-ivory);
+    font-family: var(--font-sans);
+  }
+  ::selection {
+    background: rgb(122 46 42 / 0.16);
+    color: var(--color-ivory);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ivory);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+  input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .page-container {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 80rem;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) { .page-container { padding-inline: 1.5rem; } }
+  @media (min-width: 1024px) { .page-container { padding-inline: 2rem; } }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-mist);
+  }
+  /* Flat card: paper-white with a hairline border. No gradients, no shadows. */
+  .surface {
+    background: var(--color-graphite);
+    border: 1px solid rgb(27 25 22 / 0.1);
+  }
+  .hairline { border-color: rgb(27 25 22 / 0.1); }
+  .text-balance { text-wrap: balance; }
+  /* Former gradient-text treatment: now inherits the surrounding type (one font, one colour). */
+  .gold-text { color: inherit; font-style: inherit; }
+  .skeleton {
+    background: linear-gradient(90deg, rgb(27 25 22 / 0.04) 25%, rgb(27 25 22 / 0.08) 37%, rgb(27 25 22 / 0.04) 63%);
+    background-size: 400% 100%;
+    animation: var(--animate-shimmer);
+  }
+  /* Grain overlay retired with the dark theme. */
+  .grain::after { content: none; }
+  .prose-chat a { color: var(--color-champagne); text-decoration: underline; text-underline-offset: 3px; }
+  .prose-chat strong { color: var(--color-ivory); font-weight: 600; }
+  .scrollbar-none { scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+}
+
+input[type="range"] { accent-color: var(--color-ivory); }
